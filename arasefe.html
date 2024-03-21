@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARAS EFE DİRİN</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        color: #333;
+    }
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    select, input, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    button {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #result {
+        text-align: left;
+        margin-top: 20px;
+    }
+    #result p {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+<h1>Gezegen Ağırlık Hesaplayıcı = ARAS EFE DİRİN - 9/C</h1>
+
+<div class="container">
+    <div>
+        <label for="planets">Bir gezegen seçin:</label>
+        <select id="planets">
+            <option value="mercury">Merkür</option>
+            <option value="venus">Venüs</option>
+            <option value="earth">Dünya</option>
+            <option value="mars">Mars</option>
+            <option value="jupiter">Jüpiter</option>
+            <option value="saturn">Satürn</option>
+            <option value="uranus">Uranüs</option>
+            <option value="neptune">Neptün</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="weight">Kütlenizi girin (kg):</label>
+        <input type="number" id="weight">
+    </div>
+
+    <button onclick="calculateWeight()">Ağırlığı Hesapla</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function calculateWeight() {
+        const planets = document.getElementById("planets");
+        const weightInput = document.getElementById("weight");
+        const resultDiv = document.getElementById("result");
+
+        const selectedPlanet = planets.value;
+        const weight = weightInput.value;
+
+        const gravity = {
+            mercury: 3.7,
+            venus: 8.87,
+            earth: 9.81, // Dünya'nın yerçekimi ivmesi
+            mars: 3.71,
+            jupiter: 24.79,
+            saturn: 10.44,
+            uranus: 8.69,
+            neptune: 11.15
+        };
+
+        const calculatedWeight = gravity[selectedPlanet] * weight;
+
+        resultDiv.innerHTML = `
+            <p><strong>Seçilen Gezegen:</strong> ${planets.options[planets.selectedIndex].text}</p>
+            <p><strong>Ağırlık:</strong> ${calculatedWeight.toFixed(2)} N</p>
+            <p><strong>Yerçekimi:</strong> ${gravity[selectedPlanet]} m/s²</p>
+            <p><strong>Bilgi:</strong> ${getPlanetInfo(selectedPlanet)}</p>
+        `;
+    }
+
+    function getPlanetInfo(planet) {
+        switch (planet) {
+            case "mercury":
+                return "Merkür, Güneş Sistemi'ndeki en küçük gezegenlerden biridir.";
+            case "venus":
+                return "Venüs, en parlak gezegen olarak görünür ve Dünya'ya benzer bir büyüklükte ve kütlede.";
+            case "earth":
+                return "Dünya, yaşamın bilindiği tek gezegen olarak bilinir.";
+            case "mars":
+                return "Mars, kızıl gezegen olarak bilinir ve Dünya'ya en yakın gezegenlerden biridir.";
+            case "jupiter":
+                return "Jüpiter, Güneş Sistemi'ndeki en büyük gezegendir ve büyük bir gaz devi olarak kabul edilir.";
+            case "saturn":
+                return "Satürn, büyük halkasıyla tanınan bir gaz devi gezegendir.";
+            case "uranus":
+                return "Uranüs, Güneş Sistemi'ndeki en soğuk gezegenlerden biridir ve yatay eksende dönen tek gezegendir.";
+            case "neptune":
+                return "Neptün, Güneş Sistemi'ndeki en soğuk ve en uzak gezegendir.";
+            default:
+                return "";
+        }
+    }
+</script>
+</body>
+</html>
